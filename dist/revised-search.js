@@ -15,10 +15,69 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 })(function (CodeMirror) {
   "use strict";
 
-  var replaceDialog = "\n    <div class=\"row find\">\n      <label for=\"CodeMirror-find-field\">Replace:</label>\n      <input id=\"CodeMirror-find-field\" type=\"text\" class=\"CodeMirror-search-field\" placeholder=\"Find\" />\n      <span class=\"CodeMirror-search-hint\">(Use /re/ syntax for regexp search)</span>\n      <span class=\"CodeMirror-search-count\"></span>\n    </div>\n    <div class=\"row replace\">\n      <label for=\"CodeMirror-replace-field\">With:</label>\n      <input id=\"CodeMirror-replace-field\" type=\"text\" class=\"CodeMirror-search-field\" placeholder=\"Replace\" />\n    </div>\n    <div class=\"buttons\">\n      <button>Find Previous</button>\n      <button>Find Next</button>\n      <button>Replace</button>\n      <button>Replace All</button>\n      <button>Close</button>\n    </div>\n  ";
+  var replaceDialog = `
+    <div class="row find">
+      <label for="CodeMirror-find-field"><i aria-hidden="true" class="v-icon fa fa-search theme--dark"></i></label>
+      <input id="CodeMirror-find-field" type="text" class="CodeMirror-search-field" placeholder="Use /regexp/ for RegExp" />
+      <span class="CodeMirror-search-count"></span>
+    </div>
+    <div class="row replace">
+      <label for="CodeMirror-replace-field"><i aria-hidden="true" class="v-icon fa fa-exchange theme--dark"></i></label>
+      <input id="CodeMirror-replace-field" type="text" class="CodeMirror-search-field" placeholder="Replace with" />
+    </div>
+    <div class="buttons">
+      <button type="button" class="v-btn ma-0 v-btn--icon theme--dark">
+          <div class="v-btn__content">
+            <i aria-hidden="true" class="v-icon fa fa-chevron-left theme--dark"></i>
+          </div>
+      </button>
+      <button type="button" class="v-btn ma-0 v-btn--icon theme--dark">
+          <div class="v-btn__content">
+            <i aria-hidden="true" class="v-icon fa fa-chevron-right theme--dark"></i>
+          </div>
+      </button>
+      <button type="button" class="v-btn ma-0 v-btn--icon theme--dark">
+          <div class="v-btn__content">
+            <i aria-hidden="true" class="v-icon fa fa-refresh theme--dark"></i>
+          </div>
+      </button>
+      <button type="button" class="v-btn ma-0 v-btn--icon theme--dark">
+          <div class="v-btn__content">
+            <i aria-hidden="true" class="v-icon fa fa-retweet theme--dark"></i>
+          </div>
+      </button>
+      <button type="button" class="v-btn ma-0 v-btn--icon theme--dark">
+        <div class="v-btn__content">
+            <i aria-hidden="true" class="v-icon fa fa-times theme--dark"></i>
+          </div>
+      </button>
+    </div>
+  `;
 
-  var findDialog = "\n    <div class=\"row find\">\n      <label for=\"CodeMirror-find-field\">Find:</label>\n      <input id=\"CodeMirror-find-field\" type=\"text\" class=\"CodeMirror-search-field\" placeholder=\"Find\" />\n      <span class=\"CodeMirror-search-hint\">(Use /re/ syntax for regexp search)</span>\n      <span class=\"CodeMirror-search-count\"></span>\n    </div>\n    <div class=\"buttons\">\n      <button>Find Previous</button>\n      <button>Find Next</button>\n      <button>Close</button>\n    </div>\n  ";
-
+  var findDialog = `
+    <div class="row find">
+      <label for="CodeMirror-find-field"><i aria-hidden="true" class="v-icon fa fa-search theme--dark"></i></label>
+      <input id="CodeMirror-find-field" type="text" class="CodeMirror-search-field" placeholder="Use /regexp/ for RegExp" />
+      <div class="buttons">
+        <button type="button" class="v-btn ma-0 v-btn--icon theme--dark">
+          <div class="v-btn__content">
+            <i aria-hidden="true" class="v-icon fa fa-chevron-left theme--dark"></i>
+          </div>
+        </button>
+        <button type="button" class="v-btn ma-0 v-btn--icon theme--dark">
+          <div class="v-btn__content">
+            <i aria-hidden="true" class="v-icon fa fa-chevron-right theme--dark"></i>
+          </div>
+        </button>
+        <button type="button" class="v-btn ma-0 v-btn--icon theme--dark">
+          <div class="v-btn__content">
+            <i aria-hidden="true" class="v-icon fa fa-times theme--dark"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+    <span class="CodeMirror-search-count"></span>
+  `;
   var numMatches = 0;
   var searchOverlay = function searchOverlay(query, caseInsensitive) {
     if (typeof query == "string") query = new RegExp(query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"), caseInsensitive ? "gi" : "g");else if (!query.global) query = new RegExp(query.source, query.ignoreCase ? "gi" : "g");
